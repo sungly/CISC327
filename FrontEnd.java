@@ -5,19 +5,19 @@ public class FrontEnd{
 	private ArrayList<String> validAccounts = new ArrayList<String>();
 	private ArrayList<String> tempTransSummary = new ArrayList<String>();
 	
-	public static void main(String args[]){
+	public static void main(String args[]) throws IOException{
 		
-		readAccounts(new BufferedReader(new FileReader(new InputStreamReader(args[1]))));
+		readAccounts(new BufferedReader(new FileReader(new InputStreamReader(args[0]))));
+		
 		BufferedReader transactions = new BufferedReader(new new InputStreamReader(System.in));
-		
-		FileWriter summaryFile = new FileWriter("transactionsummary.txt");
+		FileWriter summaryFile = new FileWriter(args[1]);
 		
 		String[] transaction;
 		
 		while(true){
 			transaction = nextTransaction(transactions);
-			if (transaction != null){
-				//Get User Input
+			if(transaction == null){
+				break;
 			}
 			if(transaction[0].equals("login")){
 				Object user;
@@ -28,8 +28,8 @@ public class FrontEnd{
 				}
 				do{
 					transaction = nextTransaction(transactions);
-					if (transaction != null){
-						//Get User Input
+					if (transaction == null){
+						break;	
 					}
 					switch(transaction[0]){
 						case "create":	tempTransSummary.add(((Agent)user).create(Integer.parseInt(transaction[1]),transaction[2]));
@@ -61,7 +61,9 @@ public class FrontEnd{
 								System.out.println("Invalid transaction");
 						
 					}
-				}while(!transaction[0].equals("logout"))
+				}while(!transaction[0].equals("logout"));
+				
+				printSummaryFile(summaryFile);
 
 			}
 		}
@@ -71,6 +73,14 @@ public class FrontEnd{
 	
 	}
 	
+	
+	public void printSummaryFile(FileWriter fs){
+		for(int i = 0; i < tempTransSummary.size()-1; i++){
+			fs.write(tempTransSummary.get(i) + "\n");
+		}
+		fs.write(tempTransSummary.get(tempTransSummary.size()-1));
+		tempTransSummary.clear();
+	}
 	
 	public void readAccounts(BufferedReader reader){
 		String str = reader.readLine();
