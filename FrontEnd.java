@@ -6,16 +6,21 @@ public class FrontEnd{
 	private ArrayList<String> tempTransSummary = new ArrayList<String>();
 	
 	public static void main(String args[]) throws IOException{
+
+		FrontEnd frontEnd = new FrontEnd();
 		
-		readAccounts(new BufferedReader(new FileReader(new InputStreamReader(args[0]))));
-		
-		BufferedReader transactions = new BufferedReader(new new InputStreamReader(System.in));
-		FileWriter summaryFile = new FileWriter(args[1]);
+		BufferedReader transactions = new BufferedReader(new InputStreamReader(System.in));
+		FileWriter summaryFile = null;
+		try{
+			frontEnd.readAccounts(new BufferedReader(new FileReader(new File(args[0]))));
+			summaryFile = new FileWriter(args[1]);
+		}catch(IOException e){
+		}
 		
 		String[] transaction;
 		
 		while(true){
-			transaction = nextTransaction(transactions);
+			transaction = frontEnd.nextTransaction(transactions);
 			if(transaction == null){
 				break;
 			}
@@ -23,39 +28,40 @@ public class FrontEnd{
 				Object user;
 				if(transaction[1].equals("atm")){
 					user = new Atm();
-				}else if (transaction[1].equals("agent")){
+				}else{
 					user = new Agent();
 				}
 				do{
-					transaction = nextTransaction(transactions);
+					transaction = frontEnd.nextTransaction(transactions);
 					if (transaction == null){
 						break;	
 					}
+					
 					switch(transaction[0]){
-						case "create":	tempTransSummary.add(((Agent)user).create(Integer.parseInt(transaction[1]),transaction[2]));
+						case "create":	frontEnd.tempTransSummary.add(((Agent)user).create(Integer.parseInt(transaction[1]),transaction[2]));
 										break;
-						case "delete":	tempTransSummary.add(((Agent)user).delete(Integer.parseInt(transaction[1]),transaction[2]));
+						case "delete":	frontEnd.tempTransSummary.add(((Agent)user).delete(Integer.parseInt(transaction[1]),transaction[2]));
 										break;
 						case "deposit": if(user instanceof Atm){
-											tempTransSummary.add(((Atm)user).deposit(Integer.parseInt(transaction[1]),Integer.parseInt(transaction[2])));
+											frontEnd.tempTransSummary.add(((Atm)user).deposit(Integer.parseInt(transaction[1]),Integer.parseInt(transaction[2])));
 										}else{
-											tempTransSummary.add(((Agent)user).deposit(Integer.parseInt(transaction[1]),Integer.parseInt(transaction[2])));
+											frontEnd.tempTransSummary.add(((Agent)user).deposit(Integer.parseInt(transaction[1]),Integer.parseInt(transaction[2])));
 										}
 										break;
 						case "withdraw": if(user instanceof Atm){
-											tempTransSummary.add(((Atm)user).withdraw(Integer.parseInt(transaction[1]),Integer.parseInt(transaction[2])));
+											frontEnd.tempTransSummary.add(((Atm)user).withdraw(Integer.parseInt(transaction[1]),Integer.parseInt(transaction[2])));
 										}else{
-											tempTransSummary.add((Agent)user).withdraw(Integer.parseInt(transaction[1]),Integer.parseInt(transaction[2])));
+											frontEnd.tempTransSummary.add(((Agent)user).withdraw(Integer.parseInt(transaction[1]),Integer.parseInt(transaction[2])));
 										}
 										break;
 						case "transfer": if(user instanceof Atm){
-											tempTransSummary.add((Atm)user).transfer(Integer.parseInt(transaction[1]),Integer.parseInt(transaction[2]),Integer.parseInt(transaction[3])));
+											frontEnd.tempTransSummary.add(((Atm)user).transfer(Integer.parseInt(transaction[1]),Integer.parseInt(transaction[2]),Integer.parseInt(transaction[3])));
 										}else{
-											tempTransSummary.add((Agent)user).transfer(Integer.parseInt(transaction[1]),Integer.parseInt(transaction[2]),Integer.parseInt(transaction[3])));
+											frontEnd.tempTransSummary.add(((Agent)user).transfer(Integer.parseInt(transaction[1]),Integer.parseInt(transaction[2]),Integer.parseInt(transaction[3])));
 										}
 										break;
 						case "logout":	user = null;
-										tempTransSummary.add("ES");
+										frontEnd.tempTransSummary.add("ES");
 										break;
 						default:
 								System.out.println("Invalid transaction");
@@ -63,7 +69,7 @@ public class FrontEnd{
 					}
 				}while(!transaction[0].equals("logout"));
 				
-				printSummaryFile(summaryFile);
+				frontEnd.printSummaryFile(summaryFile);
 
 			}
 		}
@@ -74,26 +80,35 @@ public class FrontEnd{
 	}
 	
 	
-	public void printSummaryFile(FileWriter fs){
-		for(int i = 0; i < tempTransSummary.size()-1; i++){
-			fs.write(tempTransSummary.get(i) + "\n");
+	private void printSummaryFile(FileWriter fs){
+		try{
+			for(int i = 0; i < tempTransSummary.size()-1; i++){
+				fs.write(tempTransSummary.get(i) + "\n");
+			}
+			fs.write(tempTransSummary.get(tempTransSummary.size()-1));
+			tempTransSummary.clear();
+		}catch(IOException e){
 		}
-		fs.write(tempTransSummary.get(tempTransSummary.size()-1));
-		tempTransSummary.clear();
 	}
 	
-	public void readAccounts(BufferedReader reader){
-		String str = reader.readLine();
-		while(!str.equals("00000000")){
-			validAccounts.add(str);
+	private void readAccounts(BufferedReader reader){
+		try{
+			String str = reader.readLine();
+			while(!str.equals("00000000")){
+				validAccounts.add(str);
+				str = reader.readLine();
+			}
+		}catch(IOException e){
+		}
+	}
+	
+	private String[] nextTransaction(BufferedReader reader){
+		String str = null;
+		try{
 			str = reader.readLine();
-		}
-	}
-	
-	public String[] nextTransaction(BufferedReader reader){
-		String str = reader.readLine();
+		}catch(IOException e){}
 		if(str!=null){
-			return str.split(' ');
+			return str.split(" ");
 		}
 		return null;
 	}

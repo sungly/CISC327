@@ -1,6 +1,4 @@
 public class Agent extends Atm{
-	private final static int MAX_TRANS_AMMOUNT = 99 999 999;
-
 	public Agent(){
 		super();
 	}//end constructor
