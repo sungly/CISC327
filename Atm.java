@@ -12,25 +12,25 @@ public class Atm{
 		this.maxTransAmmount = maxTransAmmount;
 	}
 	
-	public String deposit(int acc, int amt){
-		if ( amt <= this.maxTransAmmount){
-			return "DE " + acc + " 00000000 " + amt + " ***";
+	public String deposit(String[] args){
+		if ( Integer.parseInt(args[1]) <= this.maxTransAmmount){
+			return "DE " + args[0] + " 00000000 " + args[1] + " ***";
 		}
 		return null;
 	}
 	
-	public String withdraw(int acc, int amt){
-		if(amt <= this.maxTransAmmount){
-			if(this.withdrawn + amt <= this.maxTransAmmount)
-				return "WD 00000000" + acc + " " + amt + " ***";
-			this.withdrawn = this.withdrawn + amt;
+	public String withdraw(String[] args){
+		if(Integer.parseInt(args[1]) <= this.maxTransAmmount){
+			if(this.withdrawn + Integer.parseInt(args[1]) <= this.maxTransAmmount)
+				return "WD 00000000" + args[0] + " " + args[1] + " ***";
+			this.withdrawn = this.withdrawn + Integer.parseInt(args[1]);
 		}
 		return null;
 	}
 	
-	public String transfer(int accFrom, int accTo, int amt){
-		if(amt <= this.maxTransAmmount){
-			return "TR " + accFrom + " " + accTo + " " + amt + " ***"; 
+	public String transfer(String[] args){
+		if(Integer.parseInt(args[2]) <= this.maxTransAmmount){
+			return "TR " + args[0] + " " + args[1] + " " + args[2] + " ***"; 
 		}
 		return null;
 	}

@@ -10,66 +10,130 @@ public class FrontEnd{
 		FrontEnd frontEnd = new FrontEnd();
 		
 		BufferedReader transactions = new BufferedReader(new InputStreamReader(System.in));
-		FileWriter summaryFile = null;
 		try{
 			frontEnd.readAccounts(new BufferedReader(new FileReader(new File(args[0]))));
-			summaryFile = new FileWriter(args[1]);
 		}catch(IOException e){
 		}
 		
-		String[] transaction;
+		String transaction;
 		
 		while(true){
-			transaction = frontEnd.nextTransaction(transactions);
-			if(transaction == null){
-				break;
+			try{
+				transaction = transactions.readLine();
+				if(transaction == null){
+					break;
+				}
+			}catch(IOException e){
+				transaction = "";
 			}
-			if(transaction[0].equals("login")){
+			if(transaction.equals("login")){
 				Object user;
-				if(transaction[1].equals("atm")){
+				System.out.println("Please enter the type of session (atm/agent)");
+				if(transactions.readLine().equals("atm")){
 					user = new Atm();
 				}else{
 					user = new Agent();
 				}
 				do{
-					transaction = frontEnd.nextTransaction(transactions);
-					if (transaction == null){
-						break;	
-					}
-					
-					switch(transaction[0]){
-						case "create":	frontEnd.tempTransSummary.add(((Agent)user).create(Integer.parseInt(transaction[1]),transaction[2]));
-										break;
-						case "delete":	frontEnd.tempTransSummary.add(((Agent)user).delete(Integer.parseInt(transaction[1]),transaction[2]));
-										break;
-						case "deposit": if(user instanceof Atm){
-											frontEnd.tempTransSummary.add(((Atm)user).deposit(Integer.parseInt(transaction[1]),Integer.parseInt(transaction[2])));
-										}else{
-											frontEnd.tempTransSummary.add(((Agent)user).deposit(Integer.parseInt(transaction[1]),Integer.parseInt(transaction[2])));
-										}
-										break;
-						case "withdraw": if(user instanceof Atm){
-											frontEnd.tempTransSummary.add(((Atm)user).withdraw(Integer.parseInt(transaction[1]),Integer.parseInt(transaction[2])));
-										}else{
-											frontEnd.tempTransSummary.add(((Agent)user).withdraw(Integer.parseInt(transaction[1]),Integer.parseInt(transaction[2])));
-										}
-										break;
-						case "transfer": if(user instanceof Atm){
-											frontEnd.tempTransSummary.add(((Atm)user).transfer(Integer.parseInt(transaction[1]),Integer.parseInt(transaction[2]),Integer.parseInt(transaction[3])));
-										}else{
-											frontEnd.tempTransSummary.add(((Agent)user).transfer(Integer.parseInt(transaction[1]),Integer.parseInt(transaction[2]),Integer.parseInt(transaction[3])));
-										}
-										break;
-						case "logout":	user = null;
-										frontEnd.tempTransSummary.add("ES");
-										break;
-						default:
-								System.out.println("Invalid transaction");
-						
-					}
-				}while(!transaction[0].equals("logout"));
+					try{
+						transaction = transactions.readLine();
+						if (transaction == null){
+							break;	
+						}
+
+						String[] params = new String[3];
+						String result = null;
+						switch(transaction){
+							case "create":	
+											if(user instanceof Agent){
+												System.out.println("Enter the account number of the new account");
+												params[0] = transactions.readLine();
+												if(frontEnd.validAccount(params[0]) && !frontEnd.validAccounts.contains(params[0])){
+													System.out.println("Enter the account name");
+													params[1] = transactions.readLine();
+													result = ((Agent)user).create(params);
+												}else{
+													System.out.println("Error: Invalid account number");
+												}
+											}else{
+												System.out.println("Error: Insufficient Permissions");
+											}
+											break;
+							case "delete":	
+											if(user instanceof Agent){
+												System.out.println("Enter the account number of the account to delete");
+												params[0] = transactions.readLine();
+												if(frontEnd.validAccount(params[0]) && frontEnd.validAccounts.contains(params[0])){
+													System.out.println("Enter the account name");
+													params[1] = transactions.readLine();
+													result = ((Agent)user).delete(params);
+													frontEnd.validAccounts.remove(params[0]);
+												}else{
+													System.out.println("Error: Invalid account number");
+												}
+											}else{
+												System.out.println("Error: Insufficient Permissions");
+											}
+											break;
+							case "deposit": 
+											System.out.println("Enter the account number to deposit to");
+											params[0] = transactions.readLine();
+											if(frontEnd.validAccount(params[0]) && frontEnd.validAccounts.contains(params[0])){
+												System.out.println("Enter the amount to deposit");
+												params[1] = transactions.readLine();
+												if(user instanceof Atm){
+													result =((Atm)user).deposit(params);
+												}else{
+													result =((Agent)user).deposit(params);
+												}
+											}
+											break;
+							case "withdraw": 
+											System.out.println("Enter the account number to withdraw from");
+											params[0] = transactions.readLine();
+											if(frontEnd.validAccount(params[0]) && frontEnd.validAccounts.contains(params[0])){
+												System.out.println("Enter the amount to withdraw");
+												params[1] = transactions.readLine();
+												if(user instanceof Atm){
+													result =((Atm)user).withdraw(params);
+												}else{
+													result =((Agent)user).withdraw(params);
+												}
+											}
+											break;
+							case "transfer":
+											System.out.println("Enter the account number of the transfer source");
+											params[0] = transactions.readLine();
+											if(frontEnd.validAccount(params[0]) && frontEnd.validAccounts.contains(params[0])){
+												System.out.println("Enter the account number of the transfer destination");
+												params[1] = transactions.readLine();
+												if(frontEnd.validAccount(params[1]) && frontEnd.validAccounts.contains(params[1])){
+													System.out.println("Enter the amount to transfer");
+													params[2] = transactions.readLine();
+													if(user instanceof Atm){
+														result =((Atm)user).transfer(params);
+													}else{
+														result =((Agent)user).transfer(params);
+													}
+												}
+											}
+											break;
+							case "logout":	user = null;
+											result =("ES");
+											break;
+							default:
+									System.out.println("Invalid transaction");
+							
+						}
+						if (result != null){
+							frontEnd.tempTransSummary.add(result);
+						}
+					}catch(IOException e){
+
+					} 
+				}while(!transaction.equals("logout"));
 				
-				frontEnd.printSummaryFile(summaryFile);
+				frontEnd.printSummaryFile(args[1]);
 
 			}
 		}
@@ -79,14 +143,21 @@ public class FrontEnd{
 	
 	}
 	
+
+	private boolean validAccount(String accountNum){
+		return (accountNum.length() == 8 && accountNum.charAt(0) != '0');
+	}
+
 	
-	private void printSummaryFile(FileWriter fs){
+	private void printSummaryFile(String file){
 		try{
-			for(int i = 0; i < tempTransSummary.size()-1; i++){
-				fs.write(tempTransSummary.get(i) + "\n");
+			FileWriter fs = new FileWriter(file);
+			for(int i = 0; i < this.tempTransSummary.size()-1; i++){
+				fs.write(this.tempTransSummary.get(i) + "\n");
 			}
-			fs.write(tempTransSummary.get(tempTransSummary.size()-1));
-			tempTransSummary.clear();
+			fs.write(this.tempTransSummary.get(this.tempTransSummary.size()-1));
+			this.tempTransSummary.clear();
+			fs.close();
 		}catch(IOException e){
 		}
 	}
@@ -95,22 +166,11 @@ public class FrontEnd{
 		try{
 			String str = reader.readLine();
 			while(!str.equals("00000000")){
-				validAccounts.add(str);
+				this.validAccounts.add(str);
 				str = reader.readLine();
 			}
 		}catch(IOException e){
 		}
-	}
-	
-	private String[] nextTransaction(BufferedReader reader){
-		String str = null;
-		try{
-			str = reader.readLine();
-		}catch(IOException e){}
-		if(str!=null){
-			return str.split(" ");
-		}
-		return null;
 	}
 	
 }

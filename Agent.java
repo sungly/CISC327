@@ -1,14 +1,18 @@
 public class Agent extends Atm{
 	public Agent(){
-		super();
+		super(99999999);
 	}//end constructor
 
-	public String create(int acc, String name){
-		return "CR " + acc + " 00000000 " + "000 " +name;
+	public String create(String[] args){
+		if(args[1].length() >= 3 && args[1].length()<=30)
+			return "CR " + args[0] + " 00000000 " + "000 " +args[1];
+		return null;
 
 	}//end end create
 
-	public String delete(int acc, String name){
-		return "DL " + acc + " 00000000 " + "000 " +name;
+	public String delete(String[] args){
+		if(args[1].length() >= 3 && args[1].length()<=30)
+			return "DL " + args[0] + " 00000000 " + "000 " +args[1];
+		return null;
 	}//end delete
 }//end Agent class
