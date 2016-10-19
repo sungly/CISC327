@@ -1,10 +1,11 @@
+import java.util.*;
 public class Atm{
 	
 	private int maxTransAmmount;
-	private int withdrawn;
+	private HashMap<String,Integer> accWithdrawn;
 	
 	public Atm(){
-		this.withdrawn = 0;
+		this.accWithdrawn = new HashMap<String,Integer>();
 		this.maxTransAmmount = 100000;
 	}
 	
@@ -21,9 +22,18 @@ public class Atm{
 	
 	public String withdraw(String[] args){
 		if(Integer.parseInt(args[1]) <= this.maxTransAmmount){
-			if(this.withdrawn + Integer.parseInt(args[1]) <= this.maxTransAmmount)
-				return "WD 00000000" + args[0] + " " + args[1] + " ***";
-			this.withdrawn = this.withdrawn + Integer.parseInt(args[1]);
+			int withdrawn;
+			try{
+				withdrawn =this.accWithdrawn.get(args[0]).intValue();
+			}catch(NullPointerException e){
+				withdrawn = 0;
+			}
+			if(withdrawn + Integer.parseInt(args[1]) <= this.maxTransAmmount){
+				this.accWithdrawn.put(args[0],new Integer(withdrawn + Integer.parseInt(args[1])));
+				return "WD 00000000 " + args[0] + " " + args[1] + " ***";
+			}else{
+				System.out.println("Withdraw limit has been reached on account");
+			}
 		}
 		return null;
 	}

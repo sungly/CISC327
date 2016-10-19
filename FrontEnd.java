@@ -7,20 +7,28 @@ public class FrontEnd{
 	
 	public static void main(String args[]) throws IOException{
 
+		//Creates a new front end object allowing program access to methods and data that have been privated
 		FrontEnd frontEnd = new FrontEnd();
 		
+		//Creates a new bufferedReader that reads from the standard input stream
 		BufferedReader transactions = new BufferedReader(new InputStreamReader(System.in));
+
 		try{
+			//Try to read the valid accounts file
 			frontEnd.readAccounts(new BufferedReader(new FileReader(new File(args[0]))));
 		}catch(IOException e){
+			System.out.println("Error: File Input for valid accounts");
 		}
 		
 		String transaction;
 		
+		//Continuous loop to keep program constantly running
 		while(true){
 			try{
 				transaction = transactions.readLine();
 				if(transaction == null){
+					//Only time transaction can be null is if we are reading the end of a file. Therefore we are testing and want
+					//to exit the continuous loop because we are done.
 					break;
 				}
 			}catch(IOException e){
@@ -129,7 +137,7 @@ public class FrontEnd{
 							frontEnd.tempTransSummary.add(result);
 						}
 					}catch(IOException e){
-
+						e.printStackTrace();
 					} 
 				}while(!transaction.equals("logout"));
 				
@@ -159,6 +167,7 @@ public class FrontEnd{
 			this.tempTransSummary.clear();
 			fs.close();
 		}catch(IOException e){
+			e.printStackTrace();
 		}
 	}
 	
@@ -170,6 +179,7 @@ public class FrontEnd{
 				str = reader.readLine();
 			}
 		}catch(IOException e){
+			e.printStackTrace();
 		}
 	}
 	
