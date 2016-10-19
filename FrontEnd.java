@@ -127,7 +127,7 @@ public class FrontEnd{
 											}
 											break;
 							case "logout":	user = null;
-											result =("ES");
+											result =("ES 00000000 00000000 ***");
 											break;
 							default:
 									System.out.println("Invalid transaction");
