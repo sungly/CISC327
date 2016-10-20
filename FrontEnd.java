@@ -37,14 +37,6 @@ public class FrontEnd {
 		// stream
 		BufferedReader transactions = new BufferedReader(new InputStreamReader(System.in));
 
-		try {
-			// Try to read the valid accounts file
-			frontEnd.readAccounts(new BufferedReader(new FileReader(new File(args[0]))));
-		} catch (IOException e) {
-			// If the file was unable to be read, output an error
-			System.out.println("Error: File Input for valid accounts");
-		}
-
 		String transaction = "";
 
 		// Continuous loop to keep program constantly running
@@ -79,6 +71,14 @@ public class FrontEnd {
 					user = new Agent();
 					System.out.println("Logging in as agent");
 				}
+				try {
+					// Try to read the valid accounts file
+					frontEnd.readAccounts(new BufferedReader(new FileReader(new File(args[0]))));
+				} catch (IOException e) {
+					// If the file was unable to be read, output an error
+					System.out.println("Error: File Input for valid accounts");
+				}
+
 				// begin session loop
 				do {
 					try {
