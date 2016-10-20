@@ -39,8 +39,10 @@ public class FrontEnd{
 				System.out.println("Please enter the type of session (atm/agent)");
 				if(transactions.readLine().equals("atm")){
 					user = new Atm();
+					System.out.println("Logging in as atm");
 				}else{
 					user = new Agent();
+					System.out.println("Logging in as agent");
 				}
 				do{
 					try{
@@ -53,84 +55,104 @@ public class FrontEnd{
 						String result = null;
 						switch(transaction){
 							case "create":	
-											if(user instanceof Agent){
-												System.out.println("Enter the account number of the new account");
-												params[0] = transactions.readLine();
-												if(frontEnd.validAccount(params[0]) && !frontEnd.validAccounts.contains(params[0])){
-													System.out.println("Enter the account name");
-													params[1] = transactions.readLine();
-													result = ((Agent)user).create(params);
-												}else{
-													System.out.println("Error: Invalid account number");
-												}
-											}else{
-												System.out.println("Error: Insufficient Permissions");
-											}
-											break;
-							case "delete":	
-											if(user instanceof Agent){
-												System.out.println("Enter the account number of the account to delete");
-												params[0] = transactions.readLine();
-												if(frontEnd.validAccount(params[0]) && frontEnd.validAccounts.contains(params[0])){
-													System.out.println("Enter the account name");
-													params[1] = transactions.readLine();
-													result = ((Agent)user).delete(params);
-													frontEnd.validAccounts.remove(params[0]);
-												}else{
-													System.out.println("Error: Invalid account number");
-												}
-											}else{
-												System.out.println("Error: Insufficient Permissions");
-											}
-											break;
+								if(user instanceof Agent){
+									System.out.println("Enter the account number of the new account");
+									params[0] = transactions.readLine();
+									if(frontEnd.validAccount(params[0]) && !frontEnd.validAccounts.contains(params[0])){
+										System.out.println("Enter the account name");
+										params[1] = transactions.readLine();
+										result = ((Agent)user).create(params);
+									}else{
+										System.out.println("Error: Invalid account number");
+									}
+								}else{
+									System.out.println("Error: Insufficient Permissions");
+								}
+								break;
+								
+							case "delete":
+
+								if(user instanceof Agent){
+									System.out.println("Enter the account number of the account to delete");
+									params[0] = transactions.readLine();
+									if(frontEnd.validAccount(params[0]) && frontEnd.validAccounts.contains(params[0])){
+										System.out.println("Enter the account name");
+										params[1] = transactions.readLine();
+										result = ((Agent)user).delete(params);
+										frontEnd.validAccounts.remove(params[0]);
+									}else{
+										System.out.println("Error: Invalid account number");
+									}
+								}else{
+									System.out.println("Error: Insufficient Permissions");
+								}
+								break;
+
 							case "deposit": 
-											System.out.println("Enter the account number to deposit to");
-											params[0] = transactions.readLine();
-											if(frontEnd.validAccount(params[0]) && frontEnd.validAccounts.contains(params[0])){
-												System.out.println("Enter the amount to deposit");
-												params[1] = transactions.readLine();
-												if(user instanceof Atm){
-													result =((Atm)user).deposit(params);
-												}else{
-													result =((Agent)user).deposit(params);
-												}
-											}
-											break;
+
+								System.out.println("Enter the account number to deposit to");
+								params[0] = transactions.readLine();
+								if(frontEnd.validAccount(params[0]) && frontEnd.validAccounts.contains(params[0])){
+									System.out.println("Enter the amount to deposit");
+									params[1] = transactions.readLine();
+									if(user instanceof Atm){
+										result =((Atm)user).deposit(params);
+									}else{
+										result =((Agent)user).deposit(params);
+									}
+								}else{
+									System.out.println("Error: Invalid account number");
+								}
+								break;
+
 							case "withdraw": 
-											System.out.println("Enter the account number to withdraw from");
-											params[0] = transactions.readLine();
-											if(frontEnd.validAccount(params[0]) && frontEnd.validAccounts.contains(params[0])){
-												System.out.println("Enter the amount to withdraw");
-												params[1] = transactions.readLine();
-												if(user instanceof Atm){
-													result =((Atm)user).withdraw(params);
-												}else{
-													result =((Agent)user).withdraw(params);
-												}
-											}
-											break;
+								
+								System.out.println("Enter the account number to withdraw from");
+								params[0] = transactions.readLine();
+								if(frontEnd.validAccount(params[0]) && frontEnd.validAccounts.contains(params[0])){
+									System.out.println("Enter the amount to withdraw");
+									params[1] = transactions.readLine();
+									if(user instanceof Atm){
+										result =((Atm)user).withdraw(params);
+									}else{
+										result =((Agent)user).withdraw(params);
+									}
+								}else{
+									System.out.println("Error: Invalid account number");
+								}
+								break;
+
 							case "transfer":
-											System.out.println("Enter the account number of the transfer source");
-											params[0] = transactions.readLine();
-											if(frontEnd.validAccount(params[0]) && frontEnd.validAccounts.contains(params[0])){
-												System.out.println("Enter the account number of the transfer destination");
-												params[1] = transactions.readLine();
-												if(frontEnd.validAccount(params[1]) && frontEnd.validAccounts.contains(params[1])){
-													System.out.println("Enter the amount to transfer");
-													params[2] = transactions.readLine();
-													if(user instanceof Atm){
-														result =((Atm)user).transfer(params);
-													}else{
-														result =((Agent)user).transfer(params);
-													}
-												}
-											}
-											break;
+
+								System.out.println("Enter the account number of the transfer source");
+								params[0] = transactions.readLine();
+								if(frontEnd.validAccount(params[0]) && frontEnd.validAccounts.contains(params[0])){
+									System.out.println("Enter the account number of the transfer destination");
+									params[1] = transactions.readLine();
+									if(frontEnd.validAccount(params[1]) && frontEnd.validAccounts.contains(params[1])){
+										System.out.println("Enter the amount to transfer");
+										params[2] = transactions.readLine();
+										if(user instanceof Atm){
+											result =((Atm)user).transfer(params);
+										}else{
+											result =((Agent)user).transfer(params);
+										}
+									}else{
+										System.out.println("Error: Invalid account number");
+									}
+								}else{
+									System.out.println("Error: Invalid account number");
+								}
+								break;
+
 							case "logout":	user = null;
-											result =("ES 00000000 00000000 ***");
-											break;
+
+								result =("ES 00000000 00000000 ***");
+								System.out.println("Logging out");
+								break;
+
 							default:
-									System.out.println("Invalid transaction");
+							System.out.println("Invalid transaction");
 							
 						}
 						if (result != null){
@@ -148,7 +170,7 @@ public class FrontEnd{
 		
 		
 		
-	
+
 	}
 	
 
