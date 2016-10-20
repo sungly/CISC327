@@ -1,10 +1,27 @@
 import java.util.*;
 import java.io.*;
+/**
+	The FrontEnd class, contains methods for checking valid account numbers, handling transaction input, and
+	outputing to the transaction summary file. Has ArrayList validAccounts to store all valid account numbers
+	to cross check with user input account numbers, and ArrayList tempTransSummary to store all of the summary
+	codes of successful transactions in order to print out to transaction summary file at the end of a session.
+	Is the main class in the project and makes use agent and atm class objects.
+
+	@author Ly Sung
+	@author Calvin Che
+	@author Tyler Mizuyabu
+*/
 public class FrontEnd{
 	
 	private ArrayList<String> validAccounts = new ArrayList<String>();
 	private ArrayList<String> tempTransSummary = new ArrayList<String>();
 	
+	/**
+		Main method responsible for the continouse program loop and the session loop that takes user input, handles the input,
+		and prints out the transaction summary file. Takes arguments array containing the file names for the valid accounts file 
+		to read from and the transaction summary file to print to.
+		@arg 	args[] 	arguments array containing the input and output files required of the program
+	*/
 	public static void main(String args[]) throws IOException{
 
 		//Creates a new front end object allowing program access to methods and data that have been privated
@@ -69,47 +86,27 @@ public class FrontEnd{
 						//switch statement will choose which command to run
 						switch(transaction){
 							case "create":	
-								//If the user is an agent then we gather command input and run create command
-								if(user instanceof Agent){
-									System.out.println("Enter the account number of the new account");
-									//acquires account number and stores it
-									params[0] = transactions.readLine();
-									//checks whether the account number is valid
-									if(frontEnd.validAccount(params[0]) && !frontEnd.validAccounts.contains(params[0])){
-										System.out.println("Enter the account name");
-										//acquires account name and stores it
-										params[1] = transactions.readLine();
-										/** passes user input for command into the create function of
-										 the agent object and stores the resulting summary code into result**/
-										result = ((Agent)user).create(params);
-									}else{
-										//Was given an invalid account number, print an error and 
-										//don't do the transaction.
-										System.out.println("Error: Invalid account number");
-									}
-								}else{
-									//Isn't an agent, print a permissions error and don't do the transaction
-									System.out.println("Error: Insufficient Permissions");
-								}
-								break;
-
 							case "delete":
-								//If the user is an agent hen we gather command input and run delete command
+								//If the user is an agent hen we gather command input and run delete or create command
 								if(user instanceof Agent){
-									System.out.println("Enter the account number of the account to delete");
+									System.out.println("Enter the account number of the account to " + transaction);
 									//aquires account number and stores it
 									params[0] = transactions.readLine();
 									//checks whether the account number is valid
-									if(frontEnd.validAccount(params[0]) && frontEnd.validAccounts.contains(params[0])){
+									if(frontEnd.validAccount(params[0],transaction)){
 										System.out.println("Enter the account name");
 										//acquires account name and stores it
 										params[1] = transactions.readLine();
-										/**passes user input for command in to the delete function of
+										/**passes user input for command in to the delete or create function of
 										the agent object and stores the resulting summary code into result**/
-										result = ((Agent)user).delete(params);
-										//Removes account from array of valid accounts so no further transactions
-										//will be applied to account number
-										frontEnd.validAccounts.remove(params[0]);
+										if(transaction.equals("delete")){
+											result = ((Agent)user).delete(params);
+											//Removes account from array of valid accounts so no further transactions
+											//will be applied to account number
+											frontEnd.validAccounts.remove(params[0]);
+										}else{
+											result = ((Agent)user).create(params);
+										}
 									}else{
 										//Was given an invalid account number, print an error and
 										//don't do the transaction
@@ -122,51 +119,31 @@ public class FrontEnd{
 								break;
 
 							case "deposit": 
-								System.out.println("Enter the account number to deposit to");
-								//aquires account number and stores it
-								params[0] = transactions.readLine();
-								//checks whether the account number is valid
-								if(frontEnd.validAccount(params[0]) && frontEnd.validAccounts.contains(params[0])){
-									System.out.println("Enter the amount to deposit");
-									//acquires amount to deposit in cents and stores it
-									params[1] = transactions.readLine();
-									//handles what to cast the user object into. Either atm or agent object depending on what
-									// instance it is
-									if(user instanceof Atm){
-										/**passes user input for command in to the deposit function of
-										the atm instance and stores the resulting summary code into result**/
-										result =((Atm)user).deposit(params);
-									}else{
-										/**passes user input for command in to the deposit function of
-										the agent instance and stores the resulting summary code into result**/
-										result =((Agent)user).deposit(params);
-									}
-								}else{
-									//Was given an invalid account number, print an error 
-									//and don't do the transaction
-									System.out.println("Error: Invalid account number");
-								}
-								break;
-
 							case "withdraw": 
-								System.out.println("Enter the account number to withdraw from");
+								System.out.println("Enter the account number");
 								//aquires account number and stores it
 								params[0] = transactions.readLine();
 								//checks whether the account number is valid
-								if(frontEnd.validAccount(params[0]) && frontEnd.validAccounts.contains(params[0])){
-									System.out.println("Enter the amount to withdraw");
-									//aquires the amount to withdraw in cents and stores it
+								if(frontEnd.validAccount(params[0],transaction)){
+									System.out.println("Enter the amount to " + transaction);
+									//aquires the amount in cents and stores it
 									params[1] = transactions.readLine();
 									//handles what to cast the user object into. Either atm or agent object depending on what
 									// instance it is
 									if(user instanceof Atm){
-										/**passes user input for command into the withdraw function of 
+										/**passes user input for command into the withdraw or deposit function of 
 										the atm instance and stores the resulting summary code into result **/
-										result =((Atm)user).withdraw(params);
+										if(transaction.equals("withdraw"))
+											result =((Atm)user).withdraw(params);
+										else
+											result =((Atm)user).deposit(params);
 									}else{
-										/**passes user input for command in to the withdraw function of
+										/**passes user input for command in to the withdraw or deposit function of
 										the agent instance and stores the resulting summary code into result**/
-										result =((Agent)user).withdraw(params);
+										if(transaction.equals("withdraw"))
+											result =((Agent)user).withdraw(params);
+										else
+											result =((Agent)user).deposit(params);
 									}
 								}else{
 									//Was given an invalid account number, print an error
@@ -180,12 +157,12 @@ public class FrontEnd{
 								//aquires transfer source account number and stores it
 								params[0] = transactions.readLine();
 								//checks whether the account number is valid
-								if(frontEnd.validAccount(params[0]) && frontEnd.validAccounts.contains(params[0])){
+								if(frontEnd.validAccount(params[0],transaction)){
 									System.out.println("Enter the account number of the transfer destination");
 									//aquires transfer destination account number and stores it
 									params[1] = transactions.readLine();
 									//checks whether the account number is valid
-									if(frontEnd.validAccount(params[1]) && frontEnd.validAccounts.contains(params[1])){
+									if(frontEnd.validAccount(params[1],transaction)){
 										System.out.println("Enter the amount to transfer");
 										//aquires the amount to transfer in cents and stores it
 										params[2] = transactions.readLine();
@@ -252,13 +229,19 @@ public class FrontEnd{
 	}
 	
 	/**
-		Checks whether the account number passed into the argument follows the correct format conventions. 
-		If further format conventions are to be added to the program, modify this methods return value.
+		Checks whether the account number passed into the argument follows the correct format conventions and is valid for transaction. 
+		If further format conventions are to be added to the program, modify this methods return value to include new format convention. 
+		Transaction parameter is used to tell whether the account number being validated should already exists or not.
+		Since for example, delete requires it to exist however create requires it not to exist.
 		@param 	accountNum	a String representing the account number whose format is too be checked
+		@param 	transaction 	a String representing the transaction occuring. Used to set the exists boolean to True or False
 		@return		A boolean, True if the account num follows the format conventions (must be 8 digits and the first digit can't be a 0). False otherwise	 
 	*/
-	private boolean validAccount(String accountNum){
-		return (accountNum.length() == 8 && accountNum.charAt(0) != '0');
+	private boolean validAccount(String accountNum, String transaction){
+		boolean exists = true;
+		if(transaction.equals("create"))
+			exists = false;
+		return (accountNum.length() == 8 && accountNum.charAt(0) != '0' && this.validAccounts.contains(accountNum) == exists);
 	}
 
 
