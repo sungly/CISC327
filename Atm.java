@@ -1,5 +1,5 @@
 import java.util.*;
-public class Atm{
+public class Atm extends Session{
 	
 	private int maxTransAmmount; // Declaring integer for the maximum withdraw/deposit/transfer.
 	private HashMap<String,Integer> accWithdrawn; // Declaring a HashMap to keep track of how much an account has withdrawn this session.
@@ -50,5 +50,26 @@ public class Atm{
 		System.out.println("Error: amount transfered must be between 0 and " + this.maxTransAmmount); //Printing a message to tell the user they sent an invalid transfer amount.
 		return null; //transfer failed, no transaction is completed.  Therefore, there is no transaction message, returns null.
 	} //end transfer.
+
+	/**
+	 * Left empty because atm cannot perform a create transaction
+	 * 
+	 * @return 		Returns null
+	 */
+	public String create(String[] args) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * Left empty because agent cannot perform a delete transaction
+	 * 
+	 * @return 		Returns null
+	 */
+	public String delete(String[] args) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }
