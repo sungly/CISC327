@@ -29,11 +29,6 @@ public class FrontEnd {
 	 */
 	public static void main(String args[]) throws IOException {
 
-		//Checks for two parameters
-		if(args.length < 2){
-			System.out.println("Missing input and/or output file");
-			System.exit(1);
-		}
 
 		// Creates a new front end object allowing program access to methods and
 		// data that have been privated
