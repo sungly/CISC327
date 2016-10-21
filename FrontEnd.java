@@ -29,6 +29,12 @@ public class FrontEnd {
 	 */
 	public static void main(String args[]) throws IOException {
 
+		//Checks for two parameters
+		if(args.length < 2){
+			System.out.println("Missing input and/or output file");
+			System.exit(1);
+		}
+
 		// Creates a new front end object allowing program access to methods and
 		// data that have been privated
 		FrontEnd frontEnd = new FrontEnd();
@@ -52,7 +58,7 @@ public class FrontEnd {
 					 * test case and must continue witht he rest of the test
 					 * cases
 					 **/
-					break;
+					System.exit(0);
 				}
 			} catch (IOException e) {
 
@@ -62,8 +68,7 @@ public class FrontEnd {
 				// Uses a general object user so that we can instantiate either
 				// an agent or atm
 				Session user;
-				System.out
-						.println("Please enter the type of session (atm/agent)");
+				System.out.println("Please enter the type of session (atm/agent)");
 				if (transactions.readLine().equals("atm")) {
 					user = new Atm();
 					System.out.println("Logging in as atm");
@@ -92,7 +97,7 @@ public class FrontEnd {
 							 * because we are done the current test case and
 							 * must continue with he rest of the test cases
 							 **/
-							break;
+							System.exit(0);
 						}
 
 						// a string array used to hold the parameters passed in
@@ -129,8 +134,7 @@ public class FrontEnd {
 										// Removes account from array of valid
 										// accounts so no further transactions
 										// will be applied to account number
-										frontEnd.validAccounts
-												.remove(params[0]);
+										frontEnd.validAccounts.remove(params[0]);
 									} else {
 										result = user.create(params);
 									}
@@ -138,14 +142,12 @@ public class FrontEnd {
 									// Was given an invalid account number,
 									// print an error and
 									// don't do the transaction
-									System.out
-											.println("Error: Invalid account number");
+									System.out.println("Error: Invalid account number");
 								}
 							} else {
 								// Isn't an agent, print a permissions error and
 								// don't do the transaction
-								System.out
-										.println("Error: Insufficient Permissions");
+								System.out.println("Error: Insufficient Permissions");
 							}
 							break;
 
@@ -237,7 +239,7 @@ public class FrontEnd {
 							// deletes current atm/agent session
 							user = null;
 							// sets result to end of summary code
-							result = ("ES 00000000 00000000 ***");
+							result = ("ES 00000000 00000000 000 ***");
 							System.out.println("Logging out");
 							break;
 
@@ -297,6 +299,12 @@ public class FrontEnd {
 		boolean exists = true;
 		if (transaction.equals("create"))
 			exists = false;
+			//Checks if create has already created an account with the given account numbers
+			for(int i = 0 ; i < this.tempTransSummary.size();i++){
+				if(this.tempTransSummary.get(i).substring(3,11).equals(accountNum)){
+					return false;
+				}
+			}
 		return (accountNum.length() == 8 && accountNum.charAt(0) != '0' && this.validAccounts
 				.contains(accountNum) == exists);
 	}
