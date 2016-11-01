@@ -1,0 +1,6 @@
+login
+agent
+delete
+12345678
+calvin
+logout

@@ -1,0 +1,12 @@
+login
+atm
+withdraw
+12345678
+50000
+withdraw
+12345678
+60000
+withdraw
+23456789
+60000
+logout

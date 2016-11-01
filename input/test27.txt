@@ -1,0 +1,10 @@
+login
+atm
+withdraw 1
+withdraw
+123456789
+withdraw
+98765432
+withdraw
+pie
+logout
