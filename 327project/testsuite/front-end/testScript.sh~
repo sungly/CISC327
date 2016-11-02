@@ -27,13 +27,7 @@ for i in input/*.txt
   #compares the summary file with the expected output file
   if ! cmp summary.txt expected/$var$expected.txt
     then
-    	echo "Error found in summary file of $var$n" >> errors.txt
+      echo $var$n >> errors.txt
   fi
-
-  if ! cmp console.txt expected-cout/"$var-coutexpected.txt"
-  	then
-  		echo "Error found in console output of $var$n" >> errors.txt
-  fi
-
   count=$((count + 1))
  done
