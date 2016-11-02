@@ -1,8 +1,13 @@
-#!/bin/bash
+!/bin/bash
+#automates test cases and checks that each test case matches its expected output
 
-#../../simbank validaccounts.txt output/summary.txt < input/test2.txt
-#counter=1
 name="output"
+expected="outputexpected"
+n='\n'
+
+#clears the error.txt to keep track of current errors
+echo ''>errors.txt
+
 for i in input/*.txt
  do
    #clearss the summary.txt to avoid duplicates
@@ -14,5 +19,10 @@ for i in input/*.txt
   var=${var#*/}
   var=${var%.*}
   cp summary.txt output1/$var$name.txt
-  #counter=$((counter + 1))
+
+  #compares the summary file with the expected output file
+  if ! cmp summary.txt expected/$var$expected.txt
+    then
+      echo $var$n >> errors.txt
+  fi
  done
