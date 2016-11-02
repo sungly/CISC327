@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 #automates test cases and checks that each test case matches its expected output
 
 name="output"

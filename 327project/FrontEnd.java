@@ -295,7 +295,7 @@ public class FrontEnd {
 	 */
 	private boolean validAccount(String accountNum, String transaction) {
 		boolean exists = true;
-		if (transaction.equals("create"))
+		if (transaction.equals("create")){
 			exists = false;
 			//Checks if create has already created an account with the given account numbers
 			for(int i = 0 ; i < this.tempTransSummary.size();i++){
@@ -303,6 +303,7 @@ public class FrontEnd {
 					return false;
 				}
 			}
+		}
 		return (accountNum.length() == 8 && accountNum.charAt(0) != '0' && this.validAccounts
 				.contains(accountNum) == exists);
 	}
