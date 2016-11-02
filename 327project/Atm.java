@@ -37,6 +37,7 @@ public class Atm extends Session{
 				return "WD " + args[0] + " 00000000 " + args[1] + " ***";
 			}else{
 				System.out.println("Withdraw limit has been reached on account"); //Printing a message to tell the user that they have exceeded their withdraw limit on the account.
+				return null;
 			}
 		}
 		System.out.println("Error: amount withdrawed must be between 0 and " + this.maxTransAmmount); //Printing a message explaining why the withdrawal failed. In this case is because the amount withdrawed was not between 0 and the maximum withdrawal amount.
