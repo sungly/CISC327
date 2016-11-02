@@ -1,9 +1,10 @@
 login
 agent
+deposit 1
 deposit
-12345678
--1
+123456789
 deposit
-12345678
-100001
-logout
+98765432
+deposit
+pie
+logout

@@ -1,10 +1,6 @@
 login
 agent
-deposit 1
-deposit
-123456789
-deposit
-98765432
-deposit
-pie
+delete
+12345678
+calvin ly
 logout

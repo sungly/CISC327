@@ -1,11 +1,21 @@
 login
 agent
+transfer 1
+transfer
+12345678 1
+transfer
+123456789
 transfer
 12345678
-23456789
--1
+123456789
+transfer
+98765432
 transfer
 12345678
-23456789
-100001
-logout
+98765432
+transfer
+pie
+transfer
+12345678
+pie
+logout

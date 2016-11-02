@@ -1,0 +1,12 @@
+Please enter the type of session (atm/agent)
+Logging in as atm
+Enter the account number
+Enter the amount to withdraw
+Withdrawing 50000 cents from account 12345678
+Enter the account number
+Enter the amount to withdraw
+Withdraw limit has been reached on account
+Enter the account number
+Enter the amount to withdraw
+Withdrawing 60000 cents from account 23456789
+Logging out

@@ -1,0 +1,6 @@
+Please enter the type of session (atm/agent)
+Logging in as agent
+Enter the account number of the account to delete
+Enter the account name
+Deleting account 12345678
+Logging out

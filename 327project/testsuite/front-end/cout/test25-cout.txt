@@ -1,0 +1,11 @@
+Please enter the type of session (atm/agent)
+Logging in as atm
+Enter the account number
+Error: Invalid account number
+Enter the account number
+Error: Invalid account number
+Enter the account number
+Error: Invalid account number
+Enter the account number
+Error: Invalid account number
+Logging out

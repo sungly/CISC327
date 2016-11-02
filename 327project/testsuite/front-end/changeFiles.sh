@@ -3,12 +3,12 @@
 
 
 name="expected"
-for i in expected/*.txt
+for i in cout/*.txt
  do
   var=$i
   var=${var#*/}
   var=${var%.*}
   echo $var$name
-  mv $i expected/$var$name.txt
+  cp $i expected-cout/$var$name.txt
   #counter=$((counter + 1))
  done

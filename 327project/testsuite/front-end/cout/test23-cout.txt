@@ -1,0 +1,19 @@
+Please enter the type of session (atm/agent)
+Logging in as agent
+Enter the account number of the account to delete
+Enter the account name
+Deleting account 12345678
+Enter the account number of the account to create
+Error: Invalid account number
+Enter the account number of the account to delete
+Error: Invalid account number
+Enter the account number
+Error: Invalid account number
+Enter the account number
+Error: Invalid account number
+Enter the account number of the transfer source
+Error: Invalid account number
+Enter the account number of the transfer source
+Error: Invalid account number
+Error: Invalid transaction
+Logging out

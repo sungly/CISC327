@@ -1,21 +1,9 @@
 login
 agent
-transfer 1
-transfer
-12345678 1
-transfer
-123456789
-transfer
+withdraw
 12345678
-123456789
-transfer
-98765432
-transfer
+50000
+withdraw
 12345678
-98765432
-transfer
-pie
-transfer
-12345678
-pie
+60000
 logout

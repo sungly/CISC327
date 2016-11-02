@@ -1,0 +1,3 @@
+Please enter the type of session (atm/agent)
+Logging in as atm
+Logging out

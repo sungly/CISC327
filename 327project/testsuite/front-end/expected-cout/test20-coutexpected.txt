@@ -1,0 +1,6 @@
+Please enter the type of session (atm/agent)
+Logging in as agent
+Enter the account number of the account to create
+Enter the account name
+Creating account 98765432
+Logging out

@@ -1,0 +1,6 @@
+Please enter the type of session (atm/agent)
+Logging in as atm
+Enter the account number
+Enter the amount to deposit
+Depositing 100 cents into account 12345678
+Logging out

@@ -1,0 +1,9 @@
+Please enter the type of session (atm/agent)
+Logging in as atm
+Enter the account number
+Enter the amount to withdraw
+Error: amount withdrawed must be between 0 and 100000
+Enter the account number
+Enter the amount to withdraw
+Error: amount withdrawed must be between 0 and 100000
+Logging out

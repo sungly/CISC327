@@ -1,0 +1,21 @@
+Please enter the type of session (atm/agent)
+Logging in as atm
+Error: Invalid transaction
+Enter the account number of the transfer source
+Error: Invalid account number
+Enter the account number of the transfer source
+Error: Invalid account number
+Enter the account number of the transfer source
+Enter the account number of the transfer destination
+Error: Invalid account number
+Enter the account number of the transfer source
+Error: Invalid account number
+Enter the account number of the transfer source
+Enter the account number of the transfer destination
+Error: Invalid account number
+Enter the account number of the transfer source
+Error: Invalid account number
+Enter the account number of the transfer source
+Enter the account number of the transfer destination
+Error: Invalid account number
+Logging out

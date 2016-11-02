@@ -1,9 +1,11 @@
 login
 atm
 deposit
-12345678
--1
+1
 deposit
-12345678
-100001
+123456789
+deposit
+98765432
+deposit
+pie
 logout

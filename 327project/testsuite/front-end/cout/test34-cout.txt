@@ -1,0 +1,9 @@
+Please enter the type of session (atm/agent)
+Logging in as agent
+Enter the account number
+Enter the amount to withdraw
+Withdrawing 50000 cents from account 12345678
+Enter the account number
+Enter the amount to withdraw
+Withdrawing 60000 cents from account 12345678
+Logging out

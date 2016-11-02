@@ -1,0 +1,5 @@
+Please enter the type of session (atm/agent)
+Logging in as atm
+Error: Insufficient Permissions
+Error: Insufficient Permissions
+Logging out

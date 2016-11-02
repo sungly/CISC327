@@ -2,18 +2,14 @@ login
 agent
 delete
 12345678
-calvin
-create
-12345678
+ab
 delete
 12345678
-withdraw
+thisnameismorethanthirtycharacters
+delete
 12345678
-deposit
+ hasspace
+delete
 12345678
-transfer
-12345678
-transfer
-98765432
-12345678
+hasspaceatend 
 logout

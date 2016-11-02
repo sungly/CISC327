@@ -1,0 +1,7 @@
+Please enter the type of session (atm/agent)
+Logging in as agent
+Enter the account number of the transfer source
+Enter the account number of the transfer destination
+Enter the amount to transfer
+Transfering 100 cents from account 12345678 to account 23456789
+Logging out

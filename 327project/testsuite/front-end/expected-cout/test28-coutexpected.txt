@@ -1,0 +1,9 @@
+Please enter the type of session (atm/agent)
+Logging in as agent
+Enter the account number
+Enter the amount to deposit
+Error: amount deposited must be between 0 and 99999999
+Enter the account number
+Enter the amount to deposit
+Error: amount deposited must be between 0 and 99999999
+Logging out

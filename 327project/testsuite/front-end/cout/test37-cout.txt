@@ -1,0 +1,11 @@
+Please enter the type of session (atm/agent)
+Logging in as atm
+Enter the account number of the transfer source
+Enter the account number of the transfer destination
+Enter the amount to transfer
+Error: amount transfered must be between 0 and 100000
+Enter the account number of the transfer source
+Enter the account number of the transfer destination
+Enter the amount to transfer
+Error: amount transfered must be between 0 and 100000
+Logging out

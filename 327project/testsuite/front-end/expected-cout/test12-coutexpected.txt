@@ -1,0 +1,4 @@
+Please enter the type of session (atm/agent)
+Logging in as atm
+Error: Invalid transaction
+Logging out

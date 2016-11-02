@@ -1,0 +1,10 @@
+Please enter the type of session (atm/agent)
+Logging in as agent
+Error: Invalid transaction
+Enter the account number
+Error: Invalid account number
+Enter the account number
+Error: Invalid account number
+Enter the account number
+Error: Invalid account number
+Logging out
