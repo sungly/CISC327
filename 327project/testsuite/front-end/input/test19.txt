@@ -8,8 +8,8 @@ create
 thisnameismorethanthirtycharacters
 create
 97865432
- hasspace
+ hass pace
 create
 97865432
-hasspaceatend
+hasspaceatend 
 logout
