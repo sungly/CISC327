@@ -1,6 +1,0 @@
-logout
-create
-delete
-withdraw
-deposit
-transfer

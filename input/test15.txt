@@ -1,5 +1,0 @@
-login
-atm
-create
-delete
-logout

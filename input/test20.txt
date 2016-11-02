@@ -1,6 +1,0 @@
-login
-agent
-create
-98765432
-calvin ly
-logout

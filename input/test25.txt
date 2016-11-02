@@ -1,9 +1,0 @@
-login
-atm
-deposit
-12345678
--1
-deposit
-12345678
-100001
-logout
