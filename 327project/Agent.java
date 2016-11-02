@@ -17,8 +17,8 @@ public class Agent extends Session{ //subclass of the Atm class.
 		// boolean flag = False;
 		// if(args[1].indexOf(" ") == -1){
 		// 	flag = True;
-		// }
-		if((args[1].length() >= 3 && args[1].length()<=30) && !(args[1].contains(" "))){ //if statement to check if the account name is within 3 and 30 alphanumeric characters.
+		// args[1].contains(" ")
+		if((args[1].length() >= 3 && args[1].length()<=30) && !(args[1].startsWith(" ") || args[1].charAt(args[1].length() -1) == ' ')){ //if statement to check if the account name is within 3 and 30 alphanumeric characters.
 			System.out.println("Creating account " + args[0]);
 			return "CR " + args[0] + " 00000000 000 " +args[1]; //Returns a transaction message to put into the Transaction Summary File.
 		}
@@ -57,7 +57,7 @@ public class Agent extends Session{ //subclass of the Atm class.
 			if(withdrawn + Integer.parseInt(args[1]) <= this.maxTransAmmount){ //Checking if the account has not exceeded their maximum withdrawal amount in this session.
 				System.out.println("Withdrawing "+ args[1] + " cents from account " + args[0]); //Printout saying withdrawing "amount to withdraw" cents from account "account number".
 				this.accWithdrawn.put(args[0],new Integer(withdrawn + Integer.parseInt(args[1]))); //Saving the total amount that this account has withdrawn this session.
-				return "WD 00000000 " + args[0] + " " + args[1] + " ***"; //Returns a transaction message to put on the transaction summary.
+				return "WD " + args[0] + " 00000000 " + args[1] + " ***"; //Returns a transaction message to put on the transaction summary.
 			}else{
 				System.out.println("Withdraw limit has been reached on account"); //Printing a message to tell the user that they have exceeded their withdraw limit on the account.
 			}

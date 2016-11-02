@@ -9,7 +9,7 @@ import java.io.*;
  * of the summary codes of successful transactions in order to print out to
  * transaction summary file at the end of a session. Is the main class in the
  * project and makes use agent and atm class instances.
- * 
+ *
  * @author 13ttm
  */
 public class FrontEnd {
@@ -23,7 +23,7 @@ public class FrontEnd {
 	 * transaction summary file. Takes arguments array containing the file names
 	 * for the valid accounts file to read from and the transaction summary file
 	 * to print to.
-	 * 
+	 *
 	 * @arg args[] arguments array containing the input and output files
 	 *      required of the program
 	 */
@@ -235,6 +235,9 @@ public class FrontEnd {
 							user = null;
 							// sets result to end of summary code
 							result = ("ES 00000000 00000000 000 ***");
+
+							//resets validAccounts
+						  frontEnd.validAccounts.clear();
 							System.out.println("Logging out");
 							break;
 
@@ -279,7 +282,7 @@ public class FrontEnd {
 	 * used to tell whether the account number being validated should already
 	 * exists or not. Since for example, delete requires it to exist however
 	 * create requires it not to exist.
-	 * 
+	 *
 	 * @param accountNum
 	 *            a String representing the account number whose format is too
 	 *            be checked
@@ -307,7 +310,7 @@ public class FrontEnd {
 	/**
 	 * Prints all transactions made in session to the transaction summary file.
 	 * The file to print into is specified by the String argument.
-	 * 
+	 *
 	 * @param file
 	 *            A String representing the name of the file to print the
 	 *            transaction summary into
@@ -339,7 +342,7 @@ public class FrontEnd {
 	 * an {@link ArrayList}. The method takes a {@link BufferedReader} as its
 	 * only parameter to use for reading line by line from the valid accounts
 	 * file.
-	 * 
+	 *
 	 * @param reader
 	 *            The BufferedReader setup to read from the valid accounts file
 	 */
