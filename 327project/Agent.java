@@ -41,7 +41,7 @@ public class Agent extends Session{ //subclass of the Atm class.
 				 args[1] -> amount
 */
 	public String deposit(String[] args){
-		if ( Integer.parseInt(args[1]) <= this.maxTransAmmount && Integer.parseInt(args[1])>0){ =
+		if ( Integer.parseInt(args[1]) <= this.maxTransAmmount && Integer.parseInt(args[1])>0){ 
 			System.out.println("Depositing "+ args[1] + " cents into account " + args[0]);
 			return "DE " + args[0] + " 00000000 " + args[1] + " ***";
 		}
