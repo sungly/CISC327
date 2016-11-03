@@ -1,6 +1,7 @@
 #!/bin/bash
 
 #automates test cases and checks that each test case matches its expected output
+#and checks that the conole output matches its expected console output
 
 name="output"
 expected="outputexpected"
@@ -29,7 +30,7 @@ for i in input/*.txt
     then
     	echo "Error found in summary file of $var$n" >> errors.txt
   fi
-
+  #compares the
   if ! cmp console.txt expected-cout/"$var-coutexpected.txt"
   	then
   		echo "Error found in console output of $var$n" >> errors.txt
