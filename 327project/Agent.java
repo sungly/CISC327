@@ -57,7 +57,7 @@ public class Agent extends Session{ //subclass of the Atm class.
 			if(withdrawn + Integer.parseInt(args[1]) <= this.maxTransAmmount){ //Checking if the account has not exceeded their maximum withdrawal amount in this session.
 				System.out.println("Withdrawing "+ args[1] + " cents from account " + args[0]); //Printout saying withdrawing "amount to withdraw" cents from account "account number".
 				this.accWithdrawn.put(args[0],new Integer(withdrawn + Integer.parseInt(args[1]))); //Saving the total amount that this account has withdrawn this session.
-				return "WD " + args[0] + " 00000000 " + args[1] + " ***"; //Returns a transaction message to put on the transaction summary.
+				return "WD 00000000 " + args[0] + " " + args[1] + " ***"; //Returns a transaction message to put on the transaction summary.
 			}else{
 				System.out.println("Withdraw limit has been reached on account"); //Printing a message to tell the user that they have exceeded their withdraw limit on the account.
 				return null;
