@@ -1,5 +1,3 @@
 
-Error found in summary file of test7
-
-Error found in summary file of test8
+Error found in console output of test8
 
