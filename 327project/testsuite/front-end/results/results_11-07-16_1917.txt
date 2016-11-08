@@ -1,0 +1,9 @@
+erros: 	tests 5,6,7,8,9,10,27,28,31,32,33,34,37  console output mispelt amount as "ammount"			changed the println statements in the 
+																									session class
+		test 7,8,34	extra space between transaction code and withdrawing account number				changed the println statements in the session class
+		test 16		created account 98765432 twice.													added to createdAccounts string so we could check for 
+																									accounts already made
+		test 22		expected output of console for test 22 was wrong								Fixed expected output for tests
+		test 23		forgot to delete account from array												Changed getAccountWithdrawn function to getAccIndex 
+																									function. Used new function to delete acc from array
+		test 33		forgot to add to withdrawn amount for accounts 									Added code so now the program adds to an accounts withdrawn amount after succesful withdraw, or transfer;

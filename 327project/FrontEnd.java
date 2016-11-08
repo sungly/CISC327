@@ -14,7 +14,7 @@ import java.io.*;
  */
 public class FrontEnd {
 
-	private ArrayList<String> validAccounts = new ArrayList<String>();
+	private int[] validAccounts;
 	private ArrayList<String> tempTransSummary = new ArrayList<String>();
 
 	/**
@@ -60,28 +60,26 @@ public class FrontEnd {
 			}
 			// Checks to see if first transaction is a login
 			if (transaction.equals("login")) {
-				// Uses a general object user so that we can instantiate either
-				// an agent or atm
+				// Uses a general object user so that we can instantiate either an agent or atm
 				Session user;
+				int type;
 				System.out.println("Please enter the type of session (atm/agent)");
 				if (transactions.readLine().equals("atm")) {
-					user = new Atm();
+					type = 0;
 					System.out.println("Logging in as atm");
 				} else {
-					user = new Agent();
+					type = 1;
 					System.out.println("Logging in as agent");
 				}
 				try {
 					// Try to read the valid accounts file
 					frontEnd.readAccounts(new BufferedReader(new FileReader(new File(args[0]))));
-				} catch (IOException e) {
-					// If the file was unable to be read, output an error
-					System.out.println("Error: File Input for valid accounts");
-				}
 
-				// begin session loop
-				do {
-					try {
+					user = new Session(type,frontEnd.validAccounts);
+
+					// begin session loop
+					do {
+					
 						// Gets the next transaction from the input stream
 						transaction = transactions.readLine();
 						if (transaction == null) {
@@ -95,139 +93,28 @@ public class FrontEnd {
 							System.exit(0);
 						}
 
-						// a string array used to hold the parameters passed in
-						// by the user for the command
-						String[] params = new String[3];
 						// string to hold the resulting summary code from the
 						// command
 						String result = null;
 						// switch statement will choose which command to run
+
 						switch (transaction) {
 						case "create":
+							result = user.create(transactions);
+							break;
 						case "delete":
-							// If the user is an agent hen we gather command
-							// input and run delete or create command
-							if (user instanceof Agent) {
-								System.out.println("Enter the account number of the account to " + transaction);
-								// aquires account number and stores it
-								params[0] = transactions.readLine();
-								// checks whether the account number is valid
-								if (frontEnd.validAccount(params[0],
-										transaction)) {
-									System.out
-											.println("Enter the account name");
-									// acquires account name and stores it
-									params[1] = transactions.readLine();
-									/**
-									 * passes user input for command in to the
-									 * delete or create function of the agent
-									 * object and stores the resulting summary
-									 * code into result
-									 **/
-									if (transaction.equals("delete")) {
-										result = user.delete(params);
-										// Removes account from array of valid
-										// accounts so no further transactions
-										// will be applied to account number
-										frontEnd.validAccounts.remove(params[0]);
-									} else {
-										result = user.create(params);
-									}
-								} else {
-									// Was given an invalid account number,
-									// print an error and
-									// don't do the transaction
-									System.out.println("Error: Invalid account number");
-								}
-							} else {
-								// Isn't an agent, print a permissions error and
-								// don't do the transaction
-								System.out.println("Error: Insufficient Permissions");
-							}
+							result = user.delete(transactions);
 							break;
 
 						case "deposit":
+							result = user.deposit(transactions);
+							break;
 						case "withdraw":
-							System.out.println("Enter the account number");
-							// aquires account number and stores it
-							params[0] = transactions.readLine();
-							// checks whether the account number is valid
-							if (frontEnd.validAccount(params[0], transaction)) {
-								System.out.println("Enter the amount to "
-										+ transaction);
-								// aquires the amount in cents and stores it
-								params[1] = transactions.readLine();
-								// handles what to cast the user object into.
-								// Either atm or agent object depending on what
-								// instance it is
-
-								/**
-								 * passes user input for command into the
-								 * withdraw or deposit function of the atm/agent
-								 * instance and stores the resulting summary
-								 * code into result
-								 **/
-								if (transaction.equals("withdraw"))
-									result = user.withdraw(params);
-								else
-									result = user.deposit(params);
-							} else {
-								// Was given an invalid account number, print an
-								// error
-								// and don't do the transaction
-								System.out
-										.println("Error: Invalid account number");
-							}
+							result = user.withdraw(transactions);
 							break;
 
 						case "transfer":
-							System.out
-									.println("Enter the account number of the transfer source");
-							// aquires transfer source account number and stores
-							// it
-							params[0] = transactions.readLine();
-							// checks whether the account number is valid
-							if (frontEnd.validAccount(params[0], transaction)) {
-								System.out
-										.println("Enter the account number of the transfer destination");
-								// aquires transfer destination account number
-								// and stores it
-								params[1] = transactions.readLine();
-								// checks whether the account number is valid
-								if (frontEnd.validAccount(params[1],
-										transaction)) {
-									System.out
-											.println("Enter the amount to transfer");
-									// aquires the amount to transfer in cents
-									// and stores it
-									params[2] = transactions.readLine();
-									// handles what to cast the user object
-									// into. Either atm or agent object
-									// depending on what
-									// instance it is
-
-									/**
-									 * passes user input for command into the
-									 * transfer function of the atm/agent
-									 * instance and stores the resulting summary
-									 * code into result
-									 **/
-									result = user.transfer(params);
-
-								} else {
-									// Was given invalid account number, print
-									// an error
-									// and don't do the transaction
-									System.out
-											.println("Error: Invalid account number");
-								}
-							} else {
-								// Was given an invalid account number, print an
-								// error
-								// and don't do the transaction
-								System.out
-										.println("Error: Invalid account number");
-							}
+							result = user.transfer(transactions);
 							break;
 
 						case "logout":
@@ -236,8 +123,6 @@ public class FrontEnd {
 							// sets result to end of summary code
 							result = ("ES 00000000 00000000 000 ***");
 
-							//resets validAccounts
-						  frontEnd.validAccounts.clear();
 							System.out.println("Logging out");
 							break;
 
@@ -255,13 +140,13 @@ public class FrontEnd {
 						if (result != null) {
 							frontEnd.tempTransSummary.add(result);
 						}
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
 					// exit out of session loop when the transaction applied is
 					// logout
-				} while (!transaction.equals("logout"));
-
+					} while (!transaction.equals("logout"));
+				} catch (IOException e) {
+					// If the file was unable to be read, output an error
+					e.printStackTrace();
+				}
 				// end of session, print the transaction summary file
 				frontEnd.printSummaryFile(args[1]);
 
@@ -272,40 +157,6 @@ public class FrontEnd {
 			}
 		}
 
-	}
-
-	/**
-	 * Checks whether the account number passed into the argument follows the
-	 * correct format conventions and is valid for transaction. If further
-	 * format conventions are to be added to the program, modify this methods
-	 * return value to include new format convention. Transaction parameter is
-	 * used to tell whether the account number being validated should already
-	 * exists or not. Since for example, delete requires it to exist however
-	 * create requires it not to exist.
-	 *
-	 * @param accountNum
-	 *            a String representing the account number whose format is too
-	 *            be checked
-	 * @param transaction
-	 *            a String representing the transaction occuring. Used to set
-	 *            the exists boolean to True or False
-	 * @return A boolean, True if the account num follows the format conventions
-	 *         (must be 8 digits and the first digit can't be a 0). False
-	 *         otherwise
-	 */
-	private boolean validAccount(String accountNum, String transaction) {
-		boolean exists = true;
-		if (transaction.equals("create")){
-			exists = false;
-			//Checks if create has already created an account with the given account numbers
-			for(int i = 0 ; i < this.tempTransSummary.size();i++){
-				if(this.tempTransSummary.get(i).substring(3,11).equals(accountNum)){
-					return false;
-				}
-			}
-		}
-		return (accountNum.length() == 8 && accountNum.charAt(0) != '0' && this.validAccounts
-				.contains(accountNum) == exists);
 	}
 
 	/**
@@ -344,22 +195,22 @@ public class FrontEnd {
 	 * only parameter to use for reading line by line from the valid accounts
 	 * file.
 	 *
-	 * @param reader
-	 *            The BufferedReader setup to read from the valid accounts file
+	 * @param reader 	The BufferedReader setup to read from the valid accounts file
 	 */
-	private void readAccounts(BufferedReader reader) {
-		try {
-			// reads the first line of the accounts file
-			String str = reader.readLine();
-			// while we have not reached the end of the accounts file
-			while (!str.equals("00000000")) {
-				// add the account read into the valid accounts ArrayList
-				this.validAccounts.add(str);
-				// read the next line of the file
-				str = reader.readLine();
-			}// done reading the file
-		} catch (IOException e) {
-			e.printStackTrace();
+	private void readAccounts(BufferedReader reader) throws IOException {
+		ArrayList<String> temp = new ArrayList<String>();
+		// reads the first line of the accounts file
+		String str = reader.readLine();
+		// while we have not reached the end of the accounts file
+		while (!str.equals("00000000")) {
+			// add the account read into the valid accounts ArrayList
+			temp.add(str);
+			// read the next line of the file
+			str = reader.readLine();
+		}// done reading the file
+		validAccounts = new int[temp.size()];
+		for(int i = 0 ; i < temp.size();i++){
+			validAccounts[i] = Integer.parseInt(temp.get(i));
 		}
 	}
 

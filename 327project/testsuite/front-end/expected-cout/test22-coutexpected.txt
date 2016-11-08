@@ -4,12 +4,12 @@ Enter the account number of the account to delete
 Enter the account name
 Error: account name must be between 3 and 30 alphanumberic characters
 Enter the account number of the account to delete
-Error: Invalid account number
-Error: Invalid transaction
+Enter the account name
+Error: account name must be between 3 and 30 alphanumberic characters
 Enter the account number of the account to delete
-Error: Invalid account number
-Error: Invalid transaction
+Enter the account name
+Error: account name must be between 3 and 30 alphanumberic characters
 Enter the account number of the account to delete
-Error: Invalid account number
-Error: Invalid transaction
+Enter the account name
+Error: account name must be between 3 and 30 alphanumberic characters
 Logging out
