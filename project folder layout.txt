@@ -1,7 +1,6 @@
 /project
 	/frontend
 		ALL JAVA, JAR, CLASS, EXECUTABLES, AND MANIFEST FILES
-		validaccounts.txt
 	/backend
 		BACKEND JAVA,JAR,CLASS, EXECUTABLES, AND MANIFEST FILES
 		MasterAccounts.txt
@@ -13,3 +12,4 @@
 			ALL FILES FOR TESTING (including a master accounts file)
 	/summaries
 		ALL PRODUCTION TRANSACTION SUMMARY FILES
+	validaccounts.txt
