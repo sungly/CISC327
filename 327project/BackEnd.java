@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.*;
 /*
 *The BackEnd class reads the previous day master accounts file and applies all the transactions made in the merged summary file(set
-*of daily transaction files). After all transacntions have been read, BackEnd writes a new master accounts file as well as a new
+*of daily transaction files). After all transactions have been read, BackEnd writes a new master accounts file as well as a new
 *valid account file. 
 *Date: November 14th
 *Authors: Cloud Programming
@@ -14,8 +14,8 @@ public class BackEnd {
 	static ArrayList<String[]> accounts = new ArrayList<String[]>();
 	
 	/*
-	*Main Method is responsible for reading the original master accounts file and 
-	*storing it in a ArrayList<String[]> accounts. It then iterates through all the 
+	*main is responsible for reading the original master accounts file and 
+	*storing it in an ArrayList<String[]> accounts. It then iterates through all the 
 	*transactions in the merged summary file and applies all the changes to the ArrayList.
 	*Once all the transactions have been read, main writes new master accounts file and
 	*new valid account file.
@@ -73,14 +73,15 @@ public class BackEnd {
 	* Deposit, withdraw and transfer all share this method to perform its transaction. Checks that the account number
 	* is valid, the current amount is not negative and that the String length of the account amount is greater than 3. 
 	* 
-	* @params accountNum	The account number
-	*	  amount	The account amount
+	* @params accountNum	The account number from the transaction summary
+	*	  amount	The account amount from the transaction summary
 	*/
 	public static void addInt(String accountNum, int amount) {
 		int index = getAccount(accountNum);
 		if (index != -1) {
 			int current = Integer.parseInt(accounts.get(index)[1]);
 			current += amount;
+			//current amount needs to be greater than 0
 			if (current < 0) {
 				System.out.println("Failed constraint: account balance is negative");
 			} else {
@@ -94,7 +95,7 @@ public class BackEnd {
 	}//end addInt
 	
 	/**
-	* createAccount adds a new account to the ArrayList accounts if the account doesn't already exist.
+	* createAccount adds a new account to the ArrayList<String[]> accounts if the account doesn't already exist.
 	*
 	* @params accountNum	The account number from the transaction summary
 	*	  amount	The account amount from the transaction summary
@@ -104,6 +105,7 @@ public class BackEnd {
 			System.out.println("Failed constraint: account number already exists");
 		} else {
 			int index = 0;
+			//finds the right place to store the new account
 			while (index < accounts.size() && Integer.parseInt(accountNum) > Integer.parseInt(accounts.get(index)[0])) {
 				index++;
 			}
@@ -112,7 +114,7 @@ public class BackEnd {
 	}//end createAccount
 	
 	/**
-	* deleteAccount deletes an account from the ArrayList accounts if the account exists, and the account amount is exactly "000"
+	* deleteAccount deletes an account from the ArrayList<String[]> accounts if the account exists and the account amount is exactly "000"
 	*
 	* @params accountNum	The account number from the transaction summary
 	*	  amount	The account amount from the transaction summary
@@ -136,8 +138,8 @@ public class BackEnd {
 	}//end deleteAccounts
 	
 	/*
-	* getAccount iterates through the the ArrayList accounts to check if a given account number exists or not. 
-	* Returns the index within the ArrayList accounts if found, otherwise returns -1.
+	* getAccount iterates through the ArrayList<String[]> accounts to check if a given account number exists or not. 
+	* Returns the index in the ArrayList<String[]> accounts if found, otherwise returns -1.
 	*
 	* @params accountNum	The account number from the transaction summary
 	*/
@@ -152,9 +154,9 @@ public class BackEnd {
 	
 	/**
 	* Takes the name of a file to write to and boolean partial to determine if its the master accounts file
-	* or the valid account file. If True, writeFile writes the validaccount.txt and only takes the account numbers
-	* from the ArrayList accounts. Otherwise, it takes each value in the ArrayList accounts and writes a new 
-	*MasterAccounts.txt file.
+	* or the valid account file type. If partial is True, writeFile writes the validaccount.txt and only takes 
+	* the account number from the ArrayList accounts. Otherwise, it takes each value in the ArrayList accounts
+	* to write a new MasterAccounts.txt file.
 	*
 	*@params file		Name of the file to write to
 		 partial 	True for validaccount, False for MasterAccounts
