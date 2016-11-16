@@ -17,7 +17,7 @@ for i in input/*.txt
   echo "" > summary.txt
   echo "running test $count"
   f="input/test$count.txt"
-  ../../simbank validaccounts.txt summary.txt < $f > console.txt
+  ../../frontend/simbank validaccounts.txt summary.txt < $f > console.txt
   #cp summary.txt output/output$counter.txt
   var=$f
   var=${var#*/}

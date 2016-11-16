@@ -12,6 +12,8 @@ import java.util.*;
 */
 public class BackEnd {
 	static ArrayList<String[]> accounts = new ArrayList<String[]>();
+	static final String MERGED_TRANSACTIONS = "./MergedTransactions.txt";
+	static final String MASTER_ACCOUNTS = "./MasterAccounts.txt";
 	
 	/*
 	*main is responsible for reading the original master accounts file and 
@@ -25,7 +27,7 @@ public class BackEnd {
 		BufferedReader br;
 		//stores master accounts file into an ArrayList
 		try {
-			br = new BufferedReader(new FileReader("MasterAccounts.txt"));
+			br = new BufferedReader(new FileReader(MASTER_ACCOUNTS));
 			String[] line = input(br);
 			while (line != null) {
 				accounts.add(line);
@@ -34,7 +36,7 @@ public class BackEnd {
 			br.close();
 			
 			//Reads each line from the merged summary file
-			br = new BufferedReader(new FileReader("MergedTransactions.txt"));
+			br = new BufferedReader(new FileReader(MERGED_TRANSACTIONS));
 			line = input(br);
 			while (!line[0].equals("ES")) {
 				switch (line[0]) {

@@ -26,7 +26,7 @@ public class Session {
 			int amnt = this.getInput(br, "Enter the amount to deposit");
 			if (this.validAmount(amnt)) {
 				System.out.println("Depositing " + amnt + " cents into account " + acc);
-				return "DE " + acc + " 00000000 " + amnt + " ***";
+				return "DE " + acc + " 00000000 " + this.formatAmount(amnt) + " ***";
 			} else {
 				System.out.println("Error: amount deposited must be between 0 and " + this.maxTransAmount);
 			}
@@ -45,7 +45,7 @@ public class Session {
 				if (amnt + this.withdrawn[accIndex] <= this.maxTransAmount) {
 					System.out.println("Withdrawing " + amnt + " cents from account " + acc);
 					this.withdrawn[accIndex] += amnt;
-					return "WD " + "00000000 " + acc + " " + amnt + " ***";
+					return "WD " + "00000000 " + acc + " " + this.formatAmount(amnt) + " ***";
 				}
 				System.out.println("Withdraw limit has been reached on account");
 
@@ -70,7 +70,7 @@ public class Session {
 						System.out
 								.println("Transfering " + amnt + " cents from account " + acc + " to account " + acc2);
 						this.withdrawn[accIndex] += amnt;
-						return "TR " + acc + " " + acc2 + " " + amnt + " ***";
+						return "TR " + acc + " " + acc2 + " " + this.formatAmount(amnt) + " ***";
 					}
 					System.out.println("Withdraw limit has been reached on account");
 
@@ -167,6 +167,14 @@ public class Session {
 
 	private boolean validAmount(int amnt) {
 		return (amnt > 0 && amnt <= maxTransAmount);
+	}
+
+	private String formatAmount(int amnt) {
+		String amount = Integer.toString(amnt);
+		while(amount.length() < 3){
+			amount = "0".concat(amount);
+		}
+		return amount;
 	}
 
 	private boolean validName(String name) {
