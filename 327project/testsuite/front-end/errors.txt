@@ -1,5 +1,8 @@
 
+<<<<<<< HEAD
 Error found in summary file of test7
 
 Error found in summary file of test8
 
+=======
+>>>>>>> 1f7191745b908901128acfb22f266a5af13c53b4
