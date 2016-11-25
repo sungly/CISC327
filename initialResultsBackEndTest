@@ -1,0 +1,50 @@
+Decision coverage testing getAccount method in BackEnd.java ...
+T1:
+Expected result is return value of 0 (array index of test account)
+Result: -1
+
+T2:
+Expected result is return value of -1 (index not found)
+Result: -1
+---------------------------------------------
+Decision coverage testing Addint method in BackEnd.java ...
+T3:
+Expected result is...
+ValidAccount
+Withdrawn 12300
+Results displayed on console
+
+T4:
+Expected result is...
+Invalid Account
+Results displayed on console
+
+T5:
+Expected result is...
+Failed constraint: account balance is negative
+Results displayed on console
+
+---------------------------------------------
+P1:
+Expected result is...
+[10150012, 12300, Lucy]
+Results:
+[10150012, 000, Lucy]
+[10150012, 12300, Lucy]
+
+P2:
+Expected result is...
+]10150011, 000, Tyler1] [10150012, 12300, Lucy]
+Results:
+[10150011, 000, Tyler1]
+[10150012, 000, Lucy]
+[10150012, 12300, Lucy]
+
+P3:
+Expected result is...
+[10150011, 000, Tyler1] [10150012, 12300, Lucy] [10150013, 000, Tyler2]
+Results:
+[10150011, 000, Tyler1]
+[10150012, 000, Lucy]
+[10150012, 12300, Lucy]
+[10150013, 000, Tyler2]

@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 /*
 *The BackEnd class reads the previous day master accounts file and applies all the transactions made in the merged summary file(set
@@ -14,6 +11,7 @@ public class BackEnd {
 	static ArrayList<String[]> accounts = new ArrayList<String[]>();
 	static final String MERGED_TRANSACTIONS = "./MergedTransactions.txt";
 	static final String MASTER_ACCOUNTS = "./MasterAccounts.txt";
+	static FileWriter fs;
 
 	/*
 	*main is responsible for reading the original master accounts file and
@@ -88,7 +86,7 @@ public class BackEnd {
 			if (current < 0) {
 				System.out.println("Failed constraint: account balance is negative");
 			} else {
-				System.out.println("Withdrawn: " + amount);
+				System.out.println("Change in balance: " + amount);
 				String temp = Integer.toString(current);
 				while (temp.length() < 3) {
 					temp = "0".concat(temp);
@@ -153,7 +151,7 @@ public class BackEnd {
 	*/
 	public static int getAccount(String accountNum) {
 		for (int i = 0; i < accounts.size(); i++) {
-			if (accounts.get(i).equals(accountNum)) {
+			if (accounts.get(i)[0].equals(accountNum)) {
 				return i;
 			}
 		}
@@ -195,4 +193,5 @@ public class BackEnd {
 		}
 		return line.split(" ");
 	}//end input
+
 }//end BackEnd
