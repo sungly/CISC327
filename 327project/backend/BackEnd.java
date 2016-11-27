@@ -57,12 +57,14 @@ public class BackEnd {
 				default:
 					break;
 				}
+
+				line=input(br);
 			}
 			br.close();
 
 			//writes a new master accounts file and a new valid account file for the next session to use
 			writeFile("MasterAccounts.txt", false);
-			writeFile("../frontend/validaccounts.txt", true);
+			writeFile("../validaccounts.txt", true);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -170,10 +172,13 @@ public class BackEnd {
 	public static void writeFile(String file, boolean partial) throws IOException {
 		FileWriter fw = new FileWriter(file);
 		for (int i = 0; i < accounts.size(); i++) {
+			fw.write(accounts.get(i)[0]);
 			if (partial) {
-				fw.write(accounts.get(i)[0]);
+				fw.write("\n");
 			} else {
-				fw.write(Arrays.toString(accounts.get(i)));
+				if(i<accounts.size()-1){
+					fw.write(" " + accounts.get(i)[1] + "\n");
+				}
 			}
 		}//end for
 		fw.flush();

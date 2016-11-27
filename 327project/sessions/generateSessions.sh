@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #Must be run with root privelages
-#This script only generates transactions with legal input
+#This script only generates transactions with PROPER input (i.e will not make transactions like withdraw -1 cents from account)
 #Takes two arguments, number of transactions to apply and session file to store them in
 output=$1
 #number of transactions to apply
@@ -73,6 +73,7 @@ do
 		input="$selTrans\n${accNums[k]}\n"
 		if [ "$j" -eq "2" ]; then
 			l=$(($RANDOM%($numAccs-1)))
+			#if transfer second account must not be the same as first account
 			while [ $l -eq $k ]; do
 				l=$(($RANDOM%($numAccs-1)))
 			done
