@@ -173,11 +173,12 @@ public class BackEnd {
 		FileWriter fw = new FileWriter(file);
 		for (int i = 0; i < accounts.size(); i++) {
 			fw.write(accounts.get(i)[0]);
-			if (partial) {
-				fw.write("\n");
-			} else {
-				if(i<accounts.size()-1){
-					fw.write(" " + accounts.get(i)[1] + "\n");
+			if(i<accounts.size()-1){
+				if (partial) {
+					fw.write("\n");
+				} else {
+					
+						fw.write(" " + accounts.get(i)[1] + "\n");
 				}
 			}
 		}//end for
