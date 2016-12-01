@@ -32,6 +32,8 @@ public class BackEnd {
 				line = input(br);
 			}
 			br.close();
+			//remove the 0000000 account
+			accounts.remove(accounts.size()-1);
 
 			//Reads each line from the merged summary file
 			br = new BufferedReader(new FileReader(MERGED_TRANSACTIONS));
@@ -173,13 +175,13 @@ public class BackEnd {
 		FileWriter fw = new FileWriter(file);
 		for (int i = 0; i < accounts.size(); i++) {
 			fw.write(accounts.get(i)[0]);
-			if(i<accounts.size()-1){
-				if (partial) {
-					fw.write("\n");
-				} else {
-					
-						fw.write(" " + accounts.get(i)[1] + "\n");
-				}
+			if (partial) {
+				fw.write("\n");
+			} else {
+				fw.write(" " + accounts.get(i)[1] + "\n");
+			}
+			if(i == accounts.size()-1){
+				fw.write("00000000");
 			}
 		}//end for
 		fw.flush();

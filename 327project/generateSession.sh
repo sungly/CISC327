@@ -5,7 +5,7 @@
 #Takes two arguments, number of transactions to apply and session file path to store them in
 output=$1
 #number of transactions to apply
-numtrans=$2
+numTransToApply=$2
 
 transaction=(deposit withdraw transfer create delete)
 sessionTypes=(atm agent)
@@ -19,7 +19,7 @@ numAccs=0
 while IFS=$'\n' read -r line_data; do
 	accNums[numAccs]="${line_data}"
 	((++numAccs))
-done < "../validaccounts.txt"
+done < "./validaccounts.txt"
 
 
 #Choose session type
@@ -34,7 +34,7 @@ if [ "$sessionType" = "atm" ]; then
 	numTrans=3
 fi
 printf "login\n$sessionType\n">$output
-for i in `seq 1 $numtrans`;
+for ((i=1;i<=$numTransToApply;i++));
 do
 	#randomly choose a transaction to do
 	j=$(($RANDOM%numTrans))
@@ -49,7 +49,7 @@ do
 			while $loop; do
 				acc=0
 				loop=false
-				for x in `seq 1 8`;
+				for ((x=1;x<=8;x++));
 				do
 					acc=$((acc*10+($RANDOM%9+1)))
 					
