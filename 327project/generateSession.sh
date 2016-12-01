@@ -2,7 +2,7 @@
 
 #Must be run with root privelages
 #This script only generates transactions with PROPER input (i.e will not make transactions like withdraw -1 cents from account)
-#Takes two arguments, number of transactions to apply and session file to store them in
+#Takes two arguments, number of transactions to apply and session file path to store them in
 output=$1
 #number of transactions to apply
 numtrans=$2
