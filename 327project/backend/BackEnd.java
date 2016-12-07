@@ -137,7 +137,7 @@ public class BackEnd {
 			if (!accounts.get(index)[1].equals("000")) {
 				System.out.println("Failed constraint: account doesn't have zero balance");
 			} else {
-				if (!accounts.get(index)[2].equals(accountName)) {
+				if (!accounts.get(index)[0].equals(accountName)) {
 					System.out.println("Failed constraint: account name doesn't match");
 				} else {
 					accounts.remove(index);
