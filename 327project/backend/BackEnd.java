@@ -10,7 +10,7 @@ import java.util.*;
 public class BackEnd {
 	static ArrayList<String[]> accounts = new ArrayList<String[]>();
 	static final String MERGED_TRANSACTIONS = "./MergedTransactions.txt";
-	static final String MASTER_ACCOUNTS = "./MasterAccounts.txt";
+	static final String MASTER_ACCOUNTS = "./backend/MasterAccounts.txt";
 	static FileWriter fs;
 
 	/*
@@ -62,9 +62,11 @@ public class BackEnd {
 
 				line=input(br);
 			}
+
 			br.close();
 
 			//writes a new master accounts file and a new valid account file for the next session to use
+
 			writeFile("MasterAccounts.txt", false);
 			writeFile("../validaccounts.txt", true);
 

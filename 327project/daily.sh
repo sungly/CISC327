@@ -15,5 +15,5 @@ done;
 echo "merge trans summaries"
 ./mergeSummaries.sh
 echo "run back office"
-cd ./backend
-./backend
+#cd ./backend
+#./backend
